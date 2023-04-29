@@ -32,9 +32,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         // AlertDialog.Builderクラスを使ってAlertDialogの準備をする
         val alertDialogBuilder = AlertDialog.Builder(this)
         alertDialogBuilder.setTitle("バリデーションチェックエラー")
-        alertDialogBuilder.setMessage("ExitTextの設定値を見直しください。")
-
-        Log.d("UI_PARTS", "Hello Dialog")
+        alertDialogBuilder.setMessage("ExitText1、2の設定値を見直しください。")
         // 肯定ボタンに表示される文字列、押したときのリスナーを設定する
         alertDialogBuilder.setPositiveButton("肯定"){dialog, which ->
             Log.d("UI_PARTS", "肯定ボタン")
@@ -58,35 +56,38 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         // ExitText1、ExitText2のnullチェック
-        if(binding.editText1.toString().toDoubleOrNull() != null && binding.editText2.toString().toDoubleOrNull() != null) {
-            showAlertDialog()
-        }else {
+        if(binding.editText1.text.toString().toDoubleOrNull() != null && binding.editText2.text.toString().toDoubleOrNull() != null) {
             val intent = Intent(this, SecondActivity::class.java)
-            val value1 = binding.editText1.toString().toDouble()
-            Log.d("UI_PARTS", "aaa")
-            val value2 = binding.editText2.toString().toDouble()
-            Log.d("UI_PARTS", "bbb")
+            val value1 = binding.editText1.text.toString().toDouble()
+            Log.d("UI_PARTS", "${value1}")
+            val value2 = binding.editText2.text.toString().toDouble()
+            Log.d("UI_PARTS", "${value2}")
             if (v != null) {
                 if (v.id == R.id.button1) {
-                    intent.putExtra("VALUE1", "${value1 + value2}");
+                    intent.putExtra("VALUE1", "${value1 + value2}")
+                    Log.d("UI_PARTS", "${value1 + value2}")
                 } else if (v.id == R.id.button2) {
-                    intent.putExtra("VALUE1", "${value1 - value2}");
+                    intent.putExtra("VALUE1", "${value1 - value2}")
+                    Log.d("UI_PARTS", "${value1 - value2}")
                 } else if (v.id == R.id.button3) {
-                    intent.putExtra("VALUE1", "${value1 * value2}");
+                    intent.putExtra("VALUE1", "${value1 * value2}")
+                    Log.d("UI_PARTS", "${value1 * value2}")
                 } else if (v.id == R.id.button4) {
                     if (value2 != 0.0) {
                         intent.putExtra("VALUE1", "${value1 / value2}")
+                        Log.d("UI_PARTS", "${value1 / value2}")
                     } else {
                         intent.putExtra("VALUE1", "${value1}を0で割ることはできません。")
                     }
                 } else {
-                    Log.d("UI_PARTS", "ccc")
                     showAlertDialog()
                 }
-            startActivity(intent)
+                startActivity(intent)
             } else {
                 showAlertDialog()
             }
+        }else{
+            showAlertDialog()
         }
     }
 }
